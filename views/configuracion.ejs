@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Game Match</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+    body, html {
+        height: 100%;
+        font-family: "Inconsolata", sans-serif;
+    }
+    </style>
+</head>
+<body>
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-padding w3-card" style="letter-spacing:4px;">
+        <a href="/" class="w3-bar-item w3-button">Game Match</a>
+        
+        <div class="w3-right w3-hide-small">
+            <a href="#config" class="w3-bar-item w3-button">Configuración</a>
+            <a href="#moddel" class="w3-bar-item w3-button">Modificar</a>
+            <a href="#delete" class="w3-bar-item w3-button">Eliminar</a>
+          </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:1100px">
+
+    <!-- Info Section -->
+    <div class="w3-row w3-padding-64" id="config">
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">INGRESO DE INFORMACIÓN</span></h5>
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+            <!-- Query1: Conexion con tabla de equipos -->
+            <p>Ingrese la información del equipo:</p>
+            <form method="post" action="/configuracion" enctype="multipart/form-data">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre del equipo" required name="Equipo"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre del entrenador" required name="entrenador"></p>
+                <p>Seleccione el logo:</p>
+                <p><input class="w3-input w3-padding-16" type="file" placeholder="Logo del equipo" required name="logo"></p>
+                
+                <p><button class="w3-button w3-black" type="submit">REGISTRAR EQUIPO</button></p>
+            </form>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+            <p>Ingrese la información del jugador:</p>
+            <form method="post" action="/configuracion/2" >
+                <p><input class="w3-input w3-padding-16 w3-border" type="number" placeholder="Ingrese el ID del equipo" required name="ID"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre completo del jugador" required name="jugador"></p>
+                <p><input class="w3-input w3-padding-16" type="number" placeholder="Número en orden del jugador" required name="numero"></p>
+                <p><button class="w3-button w3-black" type="submit">REGISTRAR JUGADOR</button></p>
+            </form>
+        </div>
+
+        <div class="w3-row w3-padding-64">
+            <p>Ingrese la información del estadio:</p>
+            <form method="post" action="/configuracion/3">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre del estadio" required name="estadio"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Ciudad en la que se encuentra el estadio" required name="ciudad"></p>
+                <p><input class="w3-input w3-padding-16" type="number" placeholder="Capacidad del estadio" required name="capacidad"></p>
+                <p><button class="w3-button w3-black" type="submit">REGISTRAR ESTADIO</button></p>
+            </form>
+        </div>
+        <div class="w3-row w3-padding-64" id="arbi">
+            <p>Ingrese la información de los árbitros:</p>
+            <form method="post" action="/configuracion/4">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre de los árbitros" required name="arbitro"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nacionalidad de los árbitros" required name="procedencia"></p>
+                <p><button class="w3-button w3-black" type="submit">REGISTRAR ÁRBITROS</button></p>
+            </form>
+        </div>
+        
+    </di>
+
+    <div class="w3-row w3-padding-64" id="program">
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PROGRAMACIÓN</span></h5>
+        <div class="w3-row w3-padding-64">
+            <p>Escoja la información para programar:</p>
+            <form method="post" action="/configuracion/5">
+                    <p>Seleccione un estadio:</p>
+                    <select name="estadios" id="estadios" class="form-control" >
+                        <option value="">Escoja una opción</option>
+                        <% 
+                        estadios = ['0'];
+                        for (var est = 0; est < dataProgram.length; est++){ 
+                            
+                            count = 0;
+                            for (var i = 0; i <= estadios.length; i++){
+                                if (estadios[i] == dataProgram[est].Estadio){
+                                    count = 1;
+                                }
+                            }
+                            if (count == 0){
+                                
+                                estadios.push(dataProgram[est].Estadio)
+                            }
+                        }
+                            for (var i = 1; i < estadios.length; i++){
+                            %>
+                            <option value="<%= estadios[i]%>"><%=estadios[i]%></option>   
+                        <% } %>
+                    </select>
+                <p>Seleccione la hora del partido:</p>
+                <div>
+                <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" id="date" required name="date"></p>
+                </div>
+                <p>Seleccione el árbitro:</p>
+                    <select name="arbitros" id="arbitros" class="form-control">
+                        <option value="">Escoja una opción</option>
+                        <% 
+                        arbitros = ['0'];
+                        for (var arb = 0; arb < dataProgram.length; arb++){ 
+                            
+                            count = 0;
+                            for (var i = 0; i <= arbitros.length; i++){
+                                if (arbitros[i] == dataProgram[arb].Arbitro){
+                                    count = 1;
+                                }
+                            }
+                            if (count == 0){
+                                
+                                arbitros.push(dataProgram[arb].Arbitro)
+                            }
+                        }
+                            for (var i = 1; i < arbitros.length; i++){
+                            %>
+                            <option value="<%= arbitros[i]%>"><%=arbitros[i]%> </option>   
+                        <% } %>
+                    </select>
+                <p><button class="w3-button w3-black" type="submit">PROGRAMAR</button></p>
+            </form>
+        </div>
+    </div>
+    <div class="W3-container" id="moddelcont">
+        <div class="w3-content" style="max-width:1100px"></div>
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">MODIFICAR</span></h5>
+            <div class="w3-row w3-center w3-card w3-padding">
+                <p>Escoja la opción que desea modificar:</p>
+                <select name="moddel" id="moddel">
+                    <option value="">Escoja una opción</option>
+                    <option value="eqname">Nombre del equipo</option>
+                    <option value="infjug">Información de los jugadores</option>
+                    <option value="infest">información del estadio</option>
+                    <option value="infarb">Información de los árbitros</option>
+                    <option value="infprog">Fecha de Programación</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="eqname">
+            <form method="post" id="eqname" action="/configuracion/6" enctype="multipart/form-data">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del equipo" required name="equiponame"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre al que desea cambiar" required name="newequipo"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre al que desea cambiar" required name="newentrenador"></p>
+                 <p><input class="w3-input w3-padding-16" type="file" placeholder="Logo del equipo" required name="newlogo"></p> 
+                <p><button class="w3-button w3-black" type="submit">CAMBIAR EQUIPO</button></p>
+            </form>
+        </div>
+        <div id="infjug">
+            <form method="post" id="infjug" action="/configuracion/7">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del jugador" required name="jug"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Equipo al que pertenece" required name="eqpjd"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre al que desea cambiar" required name="namejug"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Numero al que desea cambiar" required name="numberjug"></p>
+                <p><button class="w3-button w3-black" type="submit" >CAMBIAR JUGADOR</button></p>
+            </form>
+        </div>
+        <div id="infest">
+            <form method="post" id="infest" action="/configuracion/8">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del estadio" required name="est"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre al que desea cambiar" required name="nest"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Capacidad" required name="capacidadest"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Ubicacion" required name="ubicacionest"></p>
+                <p><button class="w3-button w3-black" type="submit" >CAMBIAR ESTADIOS</button></p>
+            </form>
+        </div>
+        <div id="infarb">
+            <form method="post" id="infarb" action="/configuracion/9">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del árbitro" required name="arb"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre al que desea cambiar" required name="narb"></p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Procedencia" required name="procedenciarb"></p>
+                <p><button class="w3-button w3-black" type="submit" >CAMBIAR ÁRBITROS</button></p>
+            </form>
+        </div>
+        <div id="infprog">
+            <form method="post" id="infprog" action="/configuracion/10">
+                <p>Seleccione la hora del partido:</p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" id="date2" required name="date2"></p>
+                <p>Seleccione la hora actualizada del partido:</p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" id="date3" required name="date3"></p>
+                <p><button class="w3-button w3-black" type="submit" >CAMBIAR PROGRAMACIÓN</button></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="W3-container" id="deletecont">
+        <div class="w3-content" style="max-width:1100px"></div>
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">ELIMINAR</span></h5>
+            <div class="w3-row w3-center w3-card w3-padding">
+                <p>Escoja la opción que desea eliminar:</p>
+                <select name="delete" id="delete">
+                    <option value="">Escoja una opción</option>
+                    <option value="deqname">Nombre del equipo</option>
+                    <option value="dinfjug">Información de los jugadores</option>
+                    <option value="dinfest">información del estadio</option>
+                    <option value="dinfarb">Información de los árbitros</option>
+                    <option value="infprogr">Programación</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="deqname">
+            <form method="post" id="deqname" action="/configuracion/11">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del equipo" required name="rmeqp"></p>
+                <p><button class="w3-button w3-black" type="submit" >ELIMINAR EQUIPO</button></p>
+            </form>
+        </div>
+
+        <div id="infjug">
+            <form method="post" id="dinfjug" action="/configuracion/12">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del jugador" required name="rmjug"></p>
+                <p><button class="w3-button w3-black" type="submit" >ELIMINAR JUGADOR</button></p>
+            </form>
+        </div>
+
+        <div id="infest">
+            <form method="post" id="dinfest" action="/configuracion/13">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del estadio" required name="rmest"></p>
+                <p><button class="w3-button w3-black" type="submit" >ELIMINAR ESTADIOS</button></p>
+            </form>
+        </div>
+
+        <div id="infarb">
+            <form method="post" id="dinfarb" action="/configuracion/14">
+                <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre actual del árbitro" required name="rmarb"></p>
+                <p><button class="w3-button w3-black" type="submit" >ELIMINAR ÁRBITROS</button></p>
+            </form>
+        </div>
+
+        <div id="infprogr">
+            <form method="post" id="dinfprogr" action="/configuracion/15">
+                <p>Seleccione la hora del partido:</p>
+                <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" id="date4" required name="date4"></p>
+                <p><button class="w3-button w3-black" type="submit" >ELIMINAR PROGRAMACIÓN</button></p>
+            </form>
+        </div>
+
+    </div>
+
+    
+    
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-48 w3-large">
+    <p>Realizado por: Anibal de Ávila, Javier Orozco, Leonardo Rodriguez y Neymer Trocha</a></p>
+</footer>
+</div>
+    
+
+</body>
+
+<script>
+
+let choice1 = document.getElementById('moddel');
+let choice2 = document.getElementById('delete');
+choice1.addEventListener('change', seleccionarCambio1);
+choice2.addEventListener('change', seleccionarCambio2);
+
+function seleccionarCambio1() {
+  let opt = choice1.value;
+  var eq = document.getElementById("eqname");
+  var jug = document.getElementById("infjug");
+  var est = document.getElementById("infest");
+  var arb = document.getElementById("infarb");
+
+  if (opt === 'eqname') {
+    eq.style.display = "block";
+    jug.style.display = "none";
+    est.style.display = "none";
+    arb.style.display = "none";
+
+  } else if (opt === 'infjug') {
+    eq.style.display = "none";
+    jug.style.display = "block";
+    est.style.display = "none";
+    arb.style.display = "none";  
+} else if (opt === 'infest') {
+    eq.style.display = "none";
+    jug.style.display = "none";
+    est.style.display = "block";
+    arb.style.display = "none";  
+} else if (opt === 'infarb') {
+    eq.style.display = "none";
+    jug.style.display = "none";
+    est.style.display = "none";
+    arb.style.display = "block";  
+} else {
+    eq.style.display = "none";
+    jug.style.display = "none";
+    est.style.display = "none";
+    arb.style.display = "none";
+  }
+}
+
+function seleccionarCambio2() {
+    let opt = choice2.value;
+    var eq = document.getElementById("deqname");
+    var jug = document.getElementById("dinfjug");
+    var est = document.getElementById("dinfest");
+    var arb = document.getElementById("dinfarb");
+  
+    if (opt === 'deqname') {
+      eq.style.display = "block";
+      jug.style.display = "none";
+      est.style.display = "none";
+      arb.style.display = "none";
+  
+    } else if (opt === 'dinfjug') {
+      eq.style.display = "none";
+      jug.style.display = "block";
+      est.style.display = "none";
+      arb.style.display = "none";  
+  } else if (opt === 'dinfest') {
+      eq.style.display = "none";
+      jug.style.display = "none";
+      est.style.display = "block";
+      arb.style.display = "none";  
+  } else if (opt === 'dinfarb') {
+      eq.style.display = "none";
+      jug.style.display = "none";
+      est.style.display = "none";
+      arb.style.display = "block";  
+  } else {
+      eq.style.display = "none";
+      jug.style.display = "none";
+      est.style.display = "none";
+      arb.style.display = "none";
+    }
+  }
+</script>
+</html>

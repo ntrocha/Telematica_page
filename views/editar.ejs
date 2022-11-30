@@ -1,0 +1,40 @@
+<%- include('./layout/cabecera.ejs') -%>
+</br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Formulario de edicion de equipos
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Editar Equipo</h5>
+            <p class="card-text">
+<form method="post" action="/actualizar" enctype="multipart/form-data">
+    
+    <input type="hidden" name="ID" value="<%=Mundial.ID%>">
+
+    <div class="form-group">
+        <label for="my-input">Equipo: </label>
+        <input id="my-input" value="<%=Mundial.Equipo%>" class="form-control" type="text" name="Equipo">
+    </div>
+</br>
+    <div class="form-group">
+        <label for="my-input">Entrenador</label>
+        <input id="my-input" value="<%=Mundial.Entrenador%>" class="form-control" type="text" name="entrenador">
+    </div>
+</br>
+    <div class="form-group">
+        <label for="my-input">Logo</label>
+        <img class="img-thumbnail" src="../images/<%=Mundial.Logo%>" width="100" alt="">
+        <input id="my-input" value="<%=Mundial.Logo%>" class="form-control-file" type="file" name="logo">
+    </div>
+</br>
+
+    <button class="btn btn-success" type="submit">Actualizar</button>
+    <a class="btn btn-primary" href="/">Cancelar</a>
+</form>
+</div>
+            </p>
+        </div>
+    </div>
+
+<%- include('./layout/piedepagina.ejs') -%>

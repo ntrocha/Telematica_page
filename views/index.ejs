@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang = en>
+<head>
+<title>Game Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+    height: 100%;
+    font-family: "Inconsolata", sans-serif;
+}
+
+.bgimg {
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://sites.google.com/site/futbolactual2/_/rsrc/1472871443262/config/customLogo.gif?revision=4");
+    min-height: 75%;
+}
+
+.menu {
+    display: none;
+}
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* The actual popup */
+  .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  
+  /* Popup arrow */
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  /* Toggle this class - hide and show the popup */
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+
+  #columnas{
+    column-count:2;
+    column-gap:10px;
+    column-rule:4px none;
+    list-style: none;
+ }
+</style>
+</head>
+<body>
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-padding w3-card" style="letter-spacing:4px;">
+        <a href="#home" class="w3-bar-item w3-button">Game Site</a>
+        <div class="w3-right w3-hide-small">
+            <a href="#topnews" class="w3-bar-item w3-button">Top News</a>
+            <a href="#partidos" class="w3-bar-item w3-button">Partidos</a>
+            <a href="#program" class="w3-bar-item w3-button">Programación</a>
+            <a href="/loging" class="w3-bar-item w3-button">Ingresar</a>
+          </div>
+    </div>
+</div>
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+    <div class="w3-display-middle w3-center">
+    <span class="w3-text-white" style="font-size:90px">Game<br>Site</span>
+    </div>
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+<!-- Top News Container -->
+<div class="w3-container" id="topnews">
+    <div class="w3-content" style="max-width:1100px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">TOP NEWS</span></h5>
+    <img src="https://library.sportingnews.com/styles/crop_style_16_9_mobile_2x/s3/2022-11/nba-plain--ac84c0b5-d419-4e94-b1c9-036377e9425e%20%281%29.png?itok=vmXqPklR" alt="alternative.png" style="width:100%;max-width:1000px" class="w3-margin-top">
+    <p>Arabia Saudita sorprendió venciendo a Argentina 2 a 1. Durante el partido se vio una gran intencionalidad por
+        parte del equipo argentino, sin embargo, no pudo hacerse con la victoria
+    </p>
+    <p>Este partido terminó 2 a 1 con la derrota de Argentina, al cual le anularon varios goles.</p> 
+    </div>
+</div>
+
+<!-- Partidos Container -->
+<div class="w3-container" id="partidos">
+    <div class="w3-content" style="max-width:1100px">
+    
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PARTIDOS</span></h5>
+    
+    <div class="w3-row w3-center w3-card w3-padding">
+        <a href="javascript:void(0)" onclick="openMenu(event, 'encurso');" id="myLink">
+        <div class="w3-col s6 tablink">En curso</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openMenu(event, 'Pasados');">
+        <div class="w3-col s6 tablink">Pasados</div>
+        </a>
+    </div>
+
+     <!--PARTIDOS ONLINE: -->
+     <div id="encurso" class="w3-container menu w3-padding-48 w3-card">
+     <div style="max-width: 520px; float: left;" id="row">
+      <%
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+        }
+      let val =  getRandomInt(9);
+      %>
+      <h4>Equipo <%= data[val].equipos%></h4>
+      </br>
+      <img class="img-thumbnail" src="images/<%= data[val].logo %>" width="100" alt="">
+      </br>
+        <h5>00:00:00</h5>
+        <p class="w3-text-grey" id="txt0" style="display: none"></p><br>
+        <h5 id="t1" style="display: none">00:01:00</h5>
+        <p class="w3-text-grey" id="txt1" style="display: none"></p><br>
+        <h5 id ="t2" style="display: none">00:02:00</h5>
+        <p class="w3-text-grey" id="txt2" style="display: none"></p><br>
+        <h5 id ="t3" style="display: none">00:03:00</h5>
+        <p class="w3-text-grey" id="txt3" style="display: none"></p><br>   
+        <h5 id ="t4" style="display: none">00:04:00</h5>
+        <p class="w3-text-grey" id="txt4" style="display: none"></p><br>
+        <h5 id ="t5" style="display: none">00:05:00</h5>
+        <p class="w3-text-grey" id="txt5" style="display: none"></p><br>
+        <h5 id ="t6" style="display: none">00:06:00</h5>
+        <p class="w3-text-grey" id="txt6" style="display: none"></p><br>
+        <h5 id ="t7" style="display: none">00:07:00</h5>
+        <p class="w3-text-grey" id="txt7" style="display: none"></p><br>
+        <h5 id ="t8" style="display: none">00:08:00</h5>
+        <p class="w3-text-grey" id="txt8" style="display: none"></p><br>
+        <h5 id ="t9" style="display: none">00:09:00</h5>
+        <p class="w3-text-grey" id="txt9" style="display: none"></p><br>
+        <h5 id ="t10" style="display: none">00:10:00</h5>
+        <p class="w3-text-grey" id="txt10" style="display: none"></p><br>
+      </div>
+        
+      <div style="max-width: 520px; float: right;" id="row">
+          <%
+          function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+            }
+          let va =  getRandomInt(9);
+          %>
+          <h4>Equipo <%= data[va].equipos%></h4>
+          </br>
+          <img class="img-thumbnail" src="images/<%= data[va].logo %>" width="100" alt="">
+          </br>
+          <h5>00:00:00</h5>
+          <p class="w3-text-grey" id="txtt0" style="display: none"></p><br>
+          <h5 id="tt1" style="display: none">00:01:00</h5>
+          <p class="w3-text-grey" id="txtt1" style="display: none"></p><br>
+          <h5 id ="tt2" style="display: none">00:02:00</h5>
+          <p class="w3-text-grey" id="txtt2" style="display: none"></p><br>
+          <h5 id ="tt3" style="display: none">00:03:00</h5>
+          <p class="w3-text-grey" id="txtt3" style="display: none"></p><br>   
+          <h5 id ="tt4" style="display: none">00:04:00</h5>
+          <p class="w3-text-grey" id="txtt4" style="display: none"></p><br>
+          <h5 id ="tt5" style="display: none">00:05:00</h5>
+          <p class="w3-text-grey" id="txtt5" style="display: none"></p><br>
+          <h5 id ="tt6" style="display: none">00:06:00</h5>
+          <p class="w3-text-grey" id="txtt6" style="display: none"></p><br>
+          <h5 id ="tt7" style="display: none">00:07:00</h5>
+          <p class="w3-text-grey" id="txtt7" style="display: none"></p><br>
+          <h5 id ="tt8" style="display: none">00:08:00</h5>
+          <p class="w3-text-grey" id="txtt8" style="display: none"></p><br>
+          <h5 id ="tt9" style="display: none">00:09:00</h5>
+          <p class="w3-text-grey" id="txtt9" style="display: none"></p><br>
+          <h5 id ="tt10" style="display: none">00:10:00</h5>
+          <p class="w3-text-grey" id="txtt10" style="display: none"></p><br>
+          </div>
+        </div>
+       <script>
+          var url = "/data";
+          var cont = 0;
+          var dtt;
+          async function Verificacion(){
+            var d1 = new Date()
+            var str = d1.toISOString().slice(0, -8)
+            console.log(str);
+            const response  = await fetch(url);
+            const json = await response.json();
+            //console.log(json[0].fecha);
+                  let counttt = 0;
+                  let TA = 0;
+                  let TR = 0;
+                  let G = 0;
+                  let TE = 0;
+                  let TA2 = 0;
+                  let TR2 = 0;
+                  let G2 = 0;
+                  let TE2 = 0;
+            for (var cc = 0; cc < json.length; cc++){ 
+               
+                if(json[cc].fecha == str){
+                  dtt=json[cc].fecha;
+                  function getRandomInt(max) {
+                  return Math.floor(Math.random() * max);
+                  }
+                  let Eventos = ["Tarjeta Amarilla","Tarjeta Roja","Gol","Tiros de esquina"]
+
+
+                  function show(i){ 
+                
+                  var x = document.getElementById("txt"+i); 
+                    if (i == 0){
+                        x.innerText = "Inicio del partido";
+                  } else if (10 > i > 0){
+                      let ev= getRandomInt(4);
+                      x.innerText = Eventos[ev];
+                      if (ev == 0){ TA = TA+1};
+                      if (ev == 1){ TR = TR+1};
+                      if (ev == 2){ G = G+1};
+                      if (ev == 0){ TE = TE+1};
+                  } else if (i == 10){
+                      x.innerText = "Final del partido";
+                  }
+                    if (x.style.display === "none") {
+                      x.style.display = "block";
+                    }  
+                  };
+                  
+                  function showT(i){
+                    var x = document.getElementById("t"+i);
+                    if (x.style.display === "none") {
+                      x.style.display = "block";
+                    }
+                  };
+
+                  function show2(i){
+                    var x = document.getElementById("txtt"+i);
+                    if (i == 0){
+                        x.innerText = "Inicio del partido";
+                  } else if (10 > i > 0){
+                      let ev= getRandomInt(4);
+                      x.innerText = Eventos[ev];
+                      if (ev == 0){ TA2 = TA2+1};
+                      if (ev == 1){ TR2 = TR2+1};
+                      if (ev == 2){ G2 = G2+1};
+                      if (ev == 0){ TE2 = TE2+1};
+                  } else if (i == 10){
+                      x.innerText = "Final del partido";
+                  }
+                    if (x.style.display === "none") {
+                      x.style.display = "block";
+                    }  
+                  };
+                  
+                  function showT2(i){
+                    var x = document.getElementById("tt"+i);
+                    if (x.style.display === "none") {
+                      x.style.display = "block";
+                    }
+                  } 
+
+                  setTimeout(show.bind(null, 0), 10000)
+                  setTimeout(show2.bind(null, 0), 10000)
+                  setTimeout(showT.bind(null, 1), 20000)
+                  setTimeout(show.bind(null, 1), 20000)
+                  setTimeout(showT2.bind(null, 1), 20000)
+                  setTimeout(show2.bind(null, 1), 20000)
+                  setTimeout(showT.bind(null, 2), 30000)
+                  setTimeout(show.bind(null, 2), 30000)
+                  setTimeout(showT2.bind(null, 2), 30000)
+                  setTimeout(show2.bind(null, 2), 30000)
+                  setTimeout(showT.bind(null, 3), 40000)
+                  setTimeout(show.bind(null, 3), 40000)
+                  setTimeout(showT2.bind(null, 3), 40000)
+                  setTimeout(show2.bind(null, 3), 40000)
+                  setTimeout(showT.bind(null, 4), 50000)
+                  setTimeout(show.bind(null, 4), 50000)
+                  setTimeout(showT2.bind(null, 4), 50000)
+                  setTimeout(show2.bind(null, 4), 50000)
+                  setTimeout(showT.bind(null, 5), 60000)
+                  setTimeout(show.bind(null, 5), 60000)
+                  setTimeout(showT2.bind(null, 5), 60000)
+                  setTimeout(show2.bind(null, 5), 60000)
+                  setTimeout(showT.bind(null, 6), 70000)
+                  setTimeout(show.bind(null, 6), 70000)
+                  setTimeout(showT2.bind(null, 6), 70000)
+                  setTimeout(show2.bind(null, 6), 70000)
+                  setTimeout(showT.bind(null, 7), 80000)
+                  setTimeout(show.bind(null, 7), 80000)
+                  setTimeout(showT2.bind(null, 7), 80000)
+                  setTimeout(show2.bind(null, 7), 80000)
+                  setTimeout(showT.bind(null, 8), 90000)
+                  setTimeout(show.bind(null, 8), 90000)
+                  setTimeout(showT2.bind(null, 8), 90000)
+                  setTimeout(show2.bind(null, 8), 90000)
+                  setTimeout(showT.bind(null, 9), 100000)
+                  setTimeout(show.bind(null, 9), 100000)
+                  setTimeout(showT2.bind(null, 9), 100000)
+                  setTimeout(show2.bind(null, 9), 100000)
+                  setTimeout(showT.bind(null, 10), 110000)
+                  setTimeout(show.bind(null, 10), 110000)
+                  setTimeout(showT2.bind(null, 10), 110000)
+                  setTimeout(show2.bind(null, 10), 110000)
+                  counttt = 1
+                }
+
+          }
+          if (counttt == 1) {
+          fetch(`/pasado1?TA=${TA}&TR=${TR}&G=${G}&TE=${TE}&fecha=${dtt}`, {
+                  method: 'GET',
+                  headers: {
+                  Accept: 'application/json',
+                    },
+                  }); 
+         fetch(`/pasado2?TA=${TA2}&TR=${TR2}&G=${G2}&TE=${TE2}&fecha=${dtt}`, {
+                  method: 'GET',
+                  headers: {
+                  Accept: 'application/json',
+                    },
+                  });
+                }
+          }
+          setInterval(Verificacion, 10000);
+      </script>
+  
+    <div id="Pasados" class="w3-container menu w3-padding-48 w3-card">
+        <div id="contpasado">
+
+        </div>
+  </div>
+    <script>
+  var url = "/data";
+  var datos;
+  async function Verificacion(){
+  const response  = await fetch(url);
+  const json = await response.json();
+  var d1 = new Date()
+  var str = d1.toISOString().slice(0, -8)
+  for( let dt = 0; dt < json.length; dt++ ) { 
+          if (json[dt].fecha < str){
+            datos += `<br><div class="popup"  onclick="showUp(${dt})">${json[dt].fecha}<div id="historicaltable${dt}" style="display: none"><p>Muestra</p></div></div><br>`
+          }
+  }  
+  document.getElementById("contpasado").innerHTML = datos
+}
+  Verificacion();
+    </script>
+<!-- Programación Container -->
+<div class="w3-container" id="program" style="padding-bottom:32px;">
+    <div class="w3-content" style="max-width:1100px">
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PROGRAMACIÓN</span></h5>
+    <img src="https://media.cdn.republica.gt/082022/1660088401369.webp?cw=698&ch=500&extw=jpg" alt="alternative.png" class="w3-image" style="width:100%">
+    <p>Programación que se encuentran en el mundial Qatar 2022:</p>
+    <p><span class="w3-tag">FYI!</span> We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste.</p>
+    </div>
+</div>
+
+<!-- End page content -->
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-48 w3-large">
+    <p>Realizado por: Anibal de ávila, Javier Orozco, Leonardo Rodriguez y Neymer Trocha</a></p>
+</footer>
+
+<script>
+// Tabbed Menu
+function openMenu(evt, menuName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("menu");
+    for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-black", "");
+    }
+    document.getElementById(menuName).style.display = "block";
+    evt.currentTarget.firstElementChild.className += " w3-black";
+}
+document.getElementById("myLink").click();
+
+function showUp(i) {
+  document.getElementById("historicaltable"+i).style.display = "block";
+    
+}
+</script>
+<script> src = "/src/index.js"  </script>
+
+</body>
+</html>
